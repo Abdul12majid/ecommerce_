@@ -1,0 +1,28 @@
+{% extends 'commerce/base.html' %}
+
+
+{% block content %}
+
+</br></br>
+<div class='col-md-6 offset-md-3'>
+<center>
+
+<div class="card mb-3" style="max-width: 500px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img src="{{ item.image.url }}" class="img-fluid rounded-start" alt="...">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.name }}</h5>
+        <p class="card-text">{{ item.description }}.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</center>
+</div>
+
+{% endblock %}
