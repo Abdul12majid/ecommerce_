@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 # Create your views here.
 def home(request):
 	products = Product.objects.all()
 	return render(request, 'commerce/home.html', {'products':products})
+
+def index(request):
+	products = Product.objects.all()
+	return render(request, 'commerce/index.html', {'products':products})
 
 def login_user(request):
 	if request.method == 'POST':
@@ -61,3 +66,14 @@ def create_account(request):
 def product(request, pk):
 	item = Product.objects.get(id=pk)
 	return render(request, 'commerce/product.html', {"item":item})
+
+
+def category(request, foo):
+	foo = foo.replace('-', ' ')
+	try:
+		category = Category.objects.get(name=foo)
+		products = Product.objects.filter(category=category)
+		return render(request, 'commerce/category.html', {'products':products, 'category':category})
+	except:
+		messages.success(request, ("Category doesn't exist"))
+		return redirect('home')
