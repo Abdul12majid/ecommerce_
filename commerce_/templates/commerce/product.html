@@ -1,4 +1,4 @@
-{% extends 'commerce/base.html' %}
+ {% extends 'commerce/base.html' %}
 
 
 {% block content %}
@@ -26,6 +26,7 @@
         <h4 style="display: inline-block;">{{ item.price }}</h4></br></br>
 
         {% endif %}
+        <button type='button' value="{{ item.id }}" class="btn btn-secondary" id="add-cart"> Add to Cart</button></br></br>
         <a href="{% url 'home' %}" class="btn btn-secondary">Home</a>
       </div>
     </div>
@@ -34,5 +35,35 @@
 
 </center>
 </div>
+
+<script type="text/javascript">
+  // check if button is pressed
+  $(document).on('click', '#add-cart', function(e){
+    e.preventDefault();
+    $.ajax({
+      type: 'POST',
+      url: '{% url 'cart_add' %}',
+      data: {
+        product_id: $('#add-cart').val(),
+        csrfmiddlewaretoken: '{{ csrf_token }}',
+        action: 'post'
+      },
+
+      success: function(json){
+        console.log(json)
+      },
+
+      error: function(xhr, errmsg, err){
+
+      }
+    });
+  })
+
+
+
+
+
+
+</script>
 
 {% endblock %}
